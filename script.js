@@ -22,7 +22,7 @@ function drawImage() {
 	ctx.fillStyle = '#000';
 	const currentDate = new Date();
 	const formattedDate = currentDate.toLocaleDateString();
-	ctx.fillText(formattedDate, 210, 362);
+	ctx.fillText(formattedDate, 175, 365);
 }
 
 nameInput.addEventListener('input', function () {
