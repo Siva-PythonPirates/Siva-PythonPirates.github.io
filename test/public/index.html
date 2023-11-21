@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Diagnosis Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #additionalFields {
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Add your custom styles and animations here */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Medical Diagnosis Form</h2>
+
+    <form id="diseaseForm" class="fadeIn">
+        <!-- Common fields -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight" required>
+
+        <!-- Disease type dropdown -->
+        <label for="diseaseType">Disease Type:</label>
+        <select id="diseaseType" name="diseaseType" onchange="loadFormFields()">
+            <option value="diabetes">Diabetes</option>
+            <option value="cardiovascular">Cardiovascular</option>
+            <option value="pulmonary">Pulmonary</option>
+            <option value="kidney">Kidney</option>
+        </select>
+
+        <!-- Container for dynamically loaded form fields -->
+        <div id="additionalFields"></div>
+
+        <!-- Submit button -->
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <!-- Result display -->
+    <div id="result"></div>
+
+    <!-- Script to handle dynamic form loading and submission -->
+    <script>
+
+      // Function to load additional form fields based on the selected disease type
+function loadFormFields() {
+    const diseaseType = document.getElementById('diseaseType').value;
+    const additionalFieldsContainer = document.getElementById('additionalFields');
+
+    // Clear previous fields
+    additionalFieldsContainer.innerHTML = '';
+
+    // Load fields dynamically based on disease type
+    if (diseaseType === 'diabetes') {
+        // Add fields specific to diabetes
+        additionalFieldsContainer.innerHTML = `
+        <label for="BloodSugarLevel">Fasting Blood Sugar Level (mg/dL):</label>
+        <input type="number" id="BloodSugarLevel" name="bloodSugarLevel" required><br>
+
+        <label for="InsulinLevel">Insulin Level (μU/mL):</label>
+        <input type="number" id="InsulinLevel" name="insulinLevel" required><br>
+
+        <label for="BMI">Body Mass Index (BMI):</label>
+        <input type="number" id="BMI" name="BMI" required>
+
+        `;
+    } else if (diseaseType === 'cardiovascular') {
+        // Add fields specific to cardiovascular
+        additionalFieldsContainer.innerHTML = `
+        <label for="bloodPressure">Blood Pressure (mmHg):</label>
+        <input type="text" id="bloodPressure" name="bloodPressure" required><br>
+
+        <label for="cholesterolLevel">Cholesterol Level (mg/dL):</label>
+        <input type="number" id="cholesterolLevel" name="cholesterolLevel" required><br>
+
+        <label for="heartRate">Resting Heart Rate (bpm):</label>
+        <input type="number" id="heartRate" name="heartRate" required><br>
+        `;
+    }else if (diseaseType === 'pulmonary') {
+        // Add fields specific to cardiovascular
+        additionalFieldsContainer.innerHTML = `
+        <label for="lungCapacity">Lung Capacity (L):</label>
+        <input type="number" id="lungCapacity" name="lungCapacity" required><br>
+
+        <label for="breathingRate">Breathing Rate (breaths per minute):</label>
+        <input type="number" id="breathingRate" name="breathingRate" required>
+
+        `;
+    }else if (diseaseType === 'kidney') {
+        // Add fields specific to cardiovascular
+        additionalFieldsContainer.innerHTML = `
+        <label for="creatinineLevel">Creatinine Level (mg/dL):</label>
+        <input type="number" id="creatinineLevel" name="creatinineLevel" required><br>
+
+        <label for="urineProtein">Urine Protein (g/day):</label>
+        <input type="number" id="urineProtein" name="urineProtein" required>
+
+        `;
+    }
+}
+
+// Function to submit the form (you can adapt this function to send data to your backend)
+// Function to submit the form (you can adapt this function to send data to your backend)
+function submitForm() {
+    const formData = new FormData(document.getElementById('diseaseForm'));
+
+    // Add AJAX call to send data to the backend and get predictions
+    fetch('/predict', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response data (update the DOM, show alerts, etc.)
+        console.log('Prediction Result:', data);
+        // Example: Update a result div with the prediction information
+        document.getElementById('result').innerText = `Prediction Result: ${data.Prediction}`;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors (e.g., show an error message to the user)
+        document.getElementById('result').innerText = 'Error occurred during prediction.';
+    });
+}
+
+
+
+    </script>
+
+    <!-- Medical image -->
+    <!-- <img src="medical-image.jpg" alt="Medical Image"> -->
+</body>
+</html>
